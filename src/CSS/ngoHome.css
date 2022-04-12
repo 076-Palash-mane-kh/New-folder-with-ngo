@@ -1,0 +1,45 @@
+.panelNgoContainer {
+  display: flex;
+  flex: 10;
+}
+
+.leftPanelNgo {
+  /* flex: 1; */
+  background-color: rgba(137, 101, 196, 0.692);
+  /* height: 100vh; */
+  /* position: relative ; */
+  padding: 20px;
+  width: 200px;
+}
+
+.RightPanelNgo {
+  /* flex: 8; */
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: rgb(218, 218, 218);
+  /* position: absolute; */
+  /* left: 150px; */
+  margin-left: 200px;
+}
+
+.headerNgo {
+  color: white;
+  font-size: 16px;
+  font-weight: 400;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.listNgoDetails {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  color: white;
+  /* padding-left: 5px; */
+  padding: 20px 5px;
+}
+
+.listItem {
+  margin-top: 10px;
+}
