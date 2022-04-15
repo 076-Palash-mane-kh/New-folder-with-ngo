@@ -8,8 +8,11 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../CSS/ngoHome.css";
+import { Link } from "react-router-dom";
+
+
 
 // const medicineData = [
 //   {
@@ -187,29 +190,53 @@ import "../CSS/ngoHome.css";
 function NgoHome() {
   const [medicines, setMedicines] = useState([]);
 
-  async function medicineData() {
-    let res = await axios.get("http://localhost:8083/medicines");
-    let myData = res.data;
+  const loadData = () => {
+   axios.get("http://localhost:8083/medicines").then((resp) => {
+    let myData = resp.data;
     console.log(myData);
-    setMedicines(res.data);
-  }
-  const handleChange = () => {
-    console.log("handle clain here");
+    setMedicines(resp.data);
+   });
   };
+    
+  const handleChange = (batch_no) => {
+    console.log("handle clain here");
+    axios.get("http://localhost:8083/isClaimed/"+batch_no).then((resp) => {
+      loadData();
+      console.log(resp.data);
+    });
+  };
+ const onClick =(e) =>{
+   alert("claim")
+  //  axios.pos
+  //  consol.log("claim")
+ }
+  
 
-  window.onload = medicineData;
+  useEffect(() => {
+
+    // if (sessionStorage.getItem("NGO") != "NGO") {
+    //   window.location = "/";
+    // }
+
+    loadData();
+  },[]);
+
+  window.onload = medicines;
+
   return (
     <div className="panelNgoContainer">
       <div className="leftPanelNgo">
         <h6 className="headerNgo">NGO Details</h6>
         <ul className="listNgoDetails">
-          <li className="listItem">Name</li>
-          <li className="listItem">City</li>
-          <li className="listItem">State</li>
+          <li className="listItem">Name : {sessionStorage.getItem("name")} </li>
+          <li className="listItem">City : {sessionStorage.getItem("city")}</li>
+          <li className="listItem">State : {sessionStorage.getItem("state")}</li>
         </ul>
-        <Button variant="contained" size="small" sx={{ mt: 2 }}>
-          Claim History
-        </Button>
+        {/* <Link to="/ClaimHistory">
+          <Button onClick={handleChange} variant="contained" size="small" sx={{ mt: 2 }}>
+            Claim History
+          </Button>
+        </Link> */}
       </div>
       <div className="RightPanelNgo">
         {medicines.map((item, index) => {
@@ -236,7 +263,7 @@ function NgoHome() {
                     alignItems: "center",
                     justifyContent: "center",
                   }}
-                  onClick={handleChange}
+                  onClick={()=>handleChange(item.batch_no)}
                 >
                   <Typography color="white">Claim</Typography>
                 </CardActions>

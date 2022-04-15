@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import "../CSS/SignIn.css";
 import "../CSS/SignUp.css"
-
+import base_url from "./bootapi.js";
 
 
 
@@ -73,55 +73,55 @@ function Registerdetails() {
 
   const handleForm = (e) => {
     e.preventDefault();    
-    if (name == "") {
+    if (fd.name == "") {
       swal.fire({
         icon: "error",
         title: "Oops...",
         text: "please enter valid details!",
       });
-    } else if (!letters.test(name)) {
+    } else if (!letters.test(fd.name)) {
       swal.fire({
         icon: "error",
         title: "Oops...",
         text: "Please Enter Valid Name",
       });
-    } else if (name.length < 2 || name.length > 15) {
+    } else if (fd.name.length < 2 || fd.name.length > 15) {
       swal.fire({
         icon: "error",
         title: "Oops...",
         text: "Name should be min 2 and max length is 15 letters",
       });
-    } else if (email === "") {
+    } else if (fd.email === "") {
       swal.fire({
         icon: "error",
         title: "Oops...",
         text: "please enter valid details!",
       });
-    } else if (!regex.test(email)) {
+    } else if (!regex.test(fd.email)) {
       swal.fire({
         icon: "error",
         title: "Oops...",
         text: "Please Enter Valid Email Address",
       });
-    } else if (contactNo === "") {
+    } else if (fd.mobileNo === "") {
       swal.fire({
         icon: "error",
         title: "Oops...",
         text: "please enter Contact Number",
       });
-    }  else if (password === "") {
+    }  else if (fd.password === "") {
       swal.fire({
         icon: "error",
         title: "Oops...",
         text: "please enter password",
       });
-    } else if (password.length < 6 || password.length > 15) {
+    } else if (fd.password.length < 6 || fd.password.length > 15) {
       swal.fire({
         icon: "error",
         title: "Oops...",
         text: "Password length is min 6 and max length is 15",
       });
-    }else if ( upiID=== "") {
+    }else if ( fd.uid=== "") {
       swal.fire({
         icon: "error",
         title: "Oops...",
@@ -141,23 +141,10 @@ function Registerdetails() {
     address: address,
     city: city,
     state: state,
-    // securityQues: securityQues,
-    // securityAns: securityAns,
     role: role,
-    // Government_Id_img:vpic
     uid:upiID
   };
   const submit = async () => {
-  //   const fd=new FormData()
-  //   fd.append("name",name)
-  //   fd.append("userid",email)
-  //   // fd.append("gender",gender)
-  //   fd.append("phone",contactNo)
-  //   fd.append("password",password)
-  //   fd.append("uid",upiID)      
-  //   fd.append("address",address)
-	// fd.append("city",city)
-	// fd.append("state",state)
 
   console.log(fd);
 

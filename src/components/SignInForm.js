@@ -4,12 +4,14 @@ import axios from "axios";
 import "../CSS/SignIn.css";
 import Otp from "./Otp";
 import Vpicupload from "./Vpicupload";
+import { useDispatch } from "react-redux";
 
 function SignInForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  let navigate = useNavigate();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleChange = (event) => {
     const id = event.target.id;
@@ -27,6 +29,7 @@ function SignInForm() {
     console.log("in login method ");
     console.log(email);
     let userdata = {};
+
     await axios
       .get("http://localhost:8083/get-user-by-email/" + email)
       .then((response) => {
@@ -34,31 +37,37 @@ function SignInForm() {
         if (response.data == null) {
           console.log("data is null");
         }
-        console.log(userdata);
+        sessionStorage.setItem("email",userdata.email)
+        sessionStorage.setItem("name",userdata.name)
+        sessionStorage.setItem("role",userdata.role)
+        sessionStorage.setItem("city",userdata.city)
+        sessionStorage.setItem("state",userdata.state)
+        dispatch({type: 'IsLoggedIn'})
+        navigate('/')
       });
     console.log(userdata.role);
 
-    if (
-      userdata.email == email &&
-      userdata.password === password &&
-      userdata.role == "admin"
-    ) {
-      navigate("/AdminHome");
-    } else if (
-      userdata.email == email &&
-      userdata.password === password &&
-      userdata.role == "ngo"
-    ) {
-      navigate("/NgoHome");
-    } else if (
-      userdata.email == email &&
-      userdata.password === password &&
-      userdata.role == "donor"
-    ) {
-      navigate("/UserHome");
-    } else {
-      console.log("user not valid");
-    }
+    // if (
+    //   userdata.email == email &&
+    //   userdata.password === password &&
+    //   userdata.role == "admin"
+    // ) {
+    //   navigate("/AdminHome");
+    // } else if (
+    //   userdata.email == email &&
+    //   userdata.password === password &&
+    //   userdata.role == "ngo"
+    // ) {
+    //   navigate("/NgoHome");
+    // } else if (
+    //   userdata.email == email &&
+    //   userdata.password === password &&
+    //   userdata.role == "donor"
+    // ) {
+    //   navigate("/UserHome");
+    // } else {
+    //   console.log("user not valid");
+    // }
 
     // await axios
     //   .post("http://localhost:8083/login", userdata)

@@ -1,19 +1,49 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // import Spline from '@splinetool/react-spline';
-
+import axios from "axios";
 import "../CSS/SignIn.css";
+import swal from "sweetalert";
 
 
 function DonateUs() {
 
+
+  useEffect(() => {
+    document.title = "DonateUS";
+  }, []);
+
 let[medname, setMedname] = useState("");
 let [expirydate, setExpirydate] = useState("");
+let [quantity, sertQuantity] = useState("")
+// let [hasAgreed, setHasAgreed] = useState("");
 
 
 let mednameinp = (e) => setMedname(e.target.value);
 let expirydateinp=(e) => setExpirydate(e.target.value);
+let quantityinp =(e) => sertQuantity(e.target.value);
 
 
+const handleSubmit = async (event) => {
+  event.preventDefault();
+
+  let donatedata = {
+    medicine_name: medname,
+    expiry_date: expirydate,
+    quantity: quantity,
+
+  };
+  localStorage.setItem("donatedata", JSON.stringify(donatedata));
+  if (donatedata.medname === "") {
+    swal("error", "please enter valid details", "error");
+  }
+  else if(donatedata.quantity === "") {
+    swal("error", "please enter valid details", "error");
+  } 
+  else{ 
+  let donate = await axios.post("http://localhost:8083/medicine-detail",donatedata).then
+  (swal("sucess", "Thank you for your Donation", "success"))
+  }
+}
 
   return (
   <div className="container justify-content-center p-5"  style ={{width:"100%"}}>
@@ -64,26 +94,33 @@ let expirydateinp=(e) => setExpirydate(e.target.value);
            Quantity:
            <input
            type="number" 
-           name="expirydate"
+           name="quantity"
            placeholder="Please Specify the Quantity of Medicines"
-           id="expirydate"
-           value={expirydate}
-           onChange={expirydateinp}
+           id="quantity"
+           required
+           value={quantity}
+           onChange={quantityinp}
            />
           </label>
         </div>
-        {/* <div  className="py-3">
-            <label className="formFieldLabel" htmlFor="medpic">
-              Please upload photo with expiry date:
-              <input type="file" name="fileupload" />
+
+
+        <div className="formField">
+            <label className="formFieldCheckboxLabel">
+              <input
+                className="formFieldCheckbox"
+                type="checkbox"
+                name="hasAgreed"
+              />{" "}
+             I hereby declare that all the information provided by me is true to the best of my knowledge <br/>and I will be solely responsible for any discrepancies found. {" "}
             </label>
-        </div> */}
-        <div  className="py-3 justify-content-center p-5">
-            <input type="submit" value="Submit" />
-        </div>
+          </div>
       </form>
+      <div  className="py-3 justify-content-center p-5">
+            <button type="submit" value="Submit" onClick={handleSubmit} >Donate</button>
+        </div>
       </div>
-              </div>  
+      </div>  
     </div>
   </div>
   );
