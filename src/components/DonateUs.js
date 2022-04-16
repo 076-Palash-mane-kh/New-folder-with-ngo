@@ -14,13 +14,15 @@ function DonateUs() {
 
 let[medname, setMedname] = useState("");
 let [expirydate, setExpirydate] = useState("");
-let [quantity, sertQuantity] = useState("")
+let [quantity, setQuantity] = useState("")
 // let [hasAgreed, setHasAgreed] = useState("");
 
 
 let mednameinp = (e) => setMedname(e.target.value);
 let expirydateinp=(e) => setExpirydate(e.target.value);
-let quantityinp =(e) => sertQuantity(e.target.value);
+let quantityinp =(e) => {setQuantity(e.target.value);
+  console.log(e.target.value);
+}
 
 
 const handleSubmit = async (event) => {
@@ -29,19 +31,22 @@ const handleSubmit = async (event) => {
   let donatedata = {
     medicine_name: medname,
     expiry_date: expirydate,
-    quantity: quantity,
-
+    quantity: parseInt(quantity)
   };
   localStorage.setItem("donatedata", JSON.stringify(donatedata));
   if (donatedata.medname === "") {
     swal("error", "please enter valid details", "error");
   }
   else if(donatedata.quantity === "") {
-    swal("error", "please enter valid details", "error");
+    swal("error", "please enter valid Quantity", "error");
   } 
   else{ 
+  console.log("donate data "+donatedata.quantity);
+
   let donate = await axios.post("http://localhost:8083/medicine-detail",donatedata).then
-  (swal("sucess", "Thank you for your Donation", "success"))
+  (
+    swal("sucess", "Thank you for your Donation", "success"))
+    //console.log(donate.quantity);
   }
 }
 
@@ -98,7 +103,7 @@ const handleSubmit = async (event) => {
            placeholder="Please Specify the Quantity of Medicines"
            id="quantity"
            required
-           value={quantity}
+
            onChange={quantityinp}
            />
           </label>

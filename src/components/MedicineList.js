@@ -5,28 +5,28 @@ import { Link } from "react-router-dom";
 export default function MedicineList() {
   const [data, setData] = useState([]);
   useEffect(() => {
+    loaddata();
+  }, []);
 
-    axios.get("http://localhost:8083/medicines").then((resp) => {
+  const loaddata = () =>{
+    axios.get("http://localhost:8083/medicinelist").then((resp) => {
       console.log(resp.data);
       setData(resp.data);
       console.log(data);
+      console.log(resp.data.batch_no);
     });
-  }, []);
-
-  function handleActive(userId, status){
-    // console.log("In verification activity")
-    // console.log(status)
-    // if(status == true){
-    //   axios.put("http://localhost:8083/suspend/"+userId)
-    // }
-    // else{
-    //   axios.put("http://localhost:8083/activate/"+userId)
-    // }
-
-    window.location.reload();
-
-
   }
+
+  const handleActive = (e) => {
+   updatestatus();
+  }
+  let id = parseInt(data.batch_no);
+  console.log(id);
+  const updatestatus = () => {
+    axios.get("http://localhost:8083/updatestatus/" + id).then((resp) => {
+      console.log(resp.data);
+  });
+  };
 
   const claimActivity = ()=>{
 
@@ -41,8 +41,6 @@ export default function MedicineList() {
             <th>Medicine Name</th>
             <th>Quantity</th>
             <th>Expiry Date</th>
-            <th>City</th>
-            <th>State</th>
             <th>Status</th>
             <th>Verify</th>
           </thead>
@@ -51,12 +49,10 @@ export default function MedicineList() {
               <tr key={x.user_ID}>
                 <td>{x.batch_no}</td>
                 <td>{x.medicine_name}</td>
-                <td>{x.quantity}</td>
+                <td>{x.quantiy}</td>
                 <td>{x.expiry_date}</td>
-                <td>{x.city}</td>
-                <td>{x.state}</td>
                 {/* <td> <button className="btn btn-primary" onClick={ ()=>{handleActive(x.user_ID, x.is_Active)} }> {x.is_Active?'Claimed':'Not Claimed'}</button> </td> */}
-                <td> <button className="btn btn-primary" onClick={ ()=>{handleActive(x.user_ID, x.is_verified)} }> {x.is_verified?'Verified':'Decline'}</button> </td>
+                <td> <button className="btn btn-primary" onClick={ ()=>{handleActive()} }> {x.is_verified?'Verified':'Decline'}</button> </td>
                 <td> <button className="btn btn-danger" onClick={ ()=>{claimActivity(x.user_ID, x.is_Claimed)} }> {x.is_Claimed?'Available':'Claimed'}</button> </td>
                 {/*
             {/* <td>

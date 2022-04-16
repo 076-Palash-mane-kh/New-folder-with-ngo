@@ -17,7 +17,7 @@ import NgoHome from "./components/NgoHome";
 import Chat from "./components/Chat"
 import "./CSS/SignIn.css";
 import Register from "./components/Register";
-import ClaimHistory from "./components/ClaimHistory";
+// import ClaimHistory from "./components/ClaimHistory";
 import ClaimHistoryAdmin from "./components/ClaimHistoryAdmin";
 import NgoDetails from "./components/NgoDetails";
 import NGOList from "./components/NGOList";
@@ -36,7 +36,7 @@ function App() {
         {/* <Route path="/ClaimHistoryAdmin" element={<ClaimHistoryAdmin />} /> */}
         <Route path="/MedicineList" element={<MedicineList />} />
         <Route path="/Register" element={<Register />} />
-        <Route path="/ClaimHistory" element={<ClaimHistory />} />
+        {/* <Route path="/ClaimHistory" element={<ClaimHistory />} /> */}
         <Route path="/ClaimHistoryAdmin" element={<ClaimHistoryAdmin />} />
         <Route path="/SignInForm" element={<SignInForm />} />
         <Route path="/SignUpForm" element={<SignUpForm />} />

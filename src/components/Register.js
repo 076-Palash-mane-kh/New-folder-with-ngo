@@ -149,7 +149,7 @@ function Registerdetails() {
   console.log(fd);
 
     const url = `http://localhost:8083/register`;
-    await axios.post(url, fd)
+   await axios.post(url, fd)
     .then(response=>{
       swal.fire({
             position: "center",
@@ -191,7 +191,7 @@ function Registerdetails() {
             <span className="details">Address</span>
             <input
               type="text"
-              placeholder="Enter your email"
+              placeholder="Enter your Address"
               id="emailid"
               value={address}
               onChange={takeaddress}

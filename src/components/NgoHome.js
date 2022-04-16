@@ -11,6 +11,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import "../CSS/ngoHome.css";
 import { Link } from "react-router-dom";
+import swal from "sweetalert2";
 
 
 
@@ -200,14 +201,22 @@ function NgoHome() {
     
   const handleChange = (batch_no) => {
     console.log("handle clain here");
-    axios.get("http://localhost:8083/isClaimed/"+batch_no).then((resp) => {
+    axios.post("http://localhost:8083/isClaimed"+batch_no)
+  .then((resp) => {
+      swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Claim Successfully",
+        showConfirmButton: false,
+        timer: 1500,
+      });
       loadData();
       console.log(resp.data);
     });
   };
  const onClick =(e) =>{
    alert("claim")
-  //  axios.pos
+  //  axios.post("http://localhost:8083/isClaimed"+item.batch_no)
   //  consol.log("claim")
  }
   
@@ -255,7 +264,7 @@ function NgoHome() {
                   <Typography>Quantiy: {item.quantity}</Typography>
                   <Typography>Expiry: {item.expiry_date}</Typography>
                 </CardContent>
-                <CardActions
+                {/* <CardActions
                   sx={{
                     background: "blue",
                     cursor: "pointer",
@@ -263,10 +272,13 @@ function NgoHome() {
                     alignItems: "center",
                     justifyContent: "center",
                   }}
-                  onClick={()=>handleChange(item.batch_no)}
-                >
+                  // onClick={()=>handleChange(item.batch_no)}
+                > */}
+                   <Button onClick={handleChange} variant="contained" size="small" sx={{ mt: 2 }}>
+            Claim 
+          </Button>
                   <Typography color="white">Claim</Typography>
-                </CardActions>
+                {/* </CardActions> */}
               </Card>
             </Box>
           );
